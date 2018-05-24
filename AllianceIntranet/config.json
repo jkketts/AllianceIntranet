@@ -1,0 +1,9 @@
+﻿{
+    "ConnectionStrings": {
+      "AdConnectionString": "server=(localdb)\\ProjectsV13;Database=AdDb;Integrated Security=true;MultipleActiveResultSets=true;"
+    },
+    "UserSettings": {
+      "UserEmail": "justin@ketterman.tv",
+      "UserPassword": "P@ssw0rd"
+    }
+}

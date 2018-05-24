@@ -1,0 +1,35 @@
+﻿@model IList<UserViewModel>
+@{ }
+<h1>All Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Office</th>
+            <th>Role</th>
+            @if (Context.User.IsInRole("Admin"))
+            {
+                <th>Edit</th>
+
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td scope="row"><a asp-controller="Account" asp-action="Detail" asp-route-id="@user.UserId">@user.FirstName @user.LastName</a></td>
+                <td>@user.Email</td>
+                <td>@user.Office</td>
+                <td>@user.Role</td>
+                @if (Context.User.IsInRole("Admin"))
+                {
+                    <td><a asp-controller="Account" asp-action="Edit" asp-route-id="@user.UserId" class="btn btn-primary">Edit</a></td>
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>

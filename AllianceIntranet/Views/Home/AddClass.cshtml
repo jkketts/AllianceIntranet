@@ -1,0 +1,52 @@
+﻿@model ClassViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using AllianceIntranet.Models
+
+@inject UserManager<AppUser> UserManager
+
+@{AppUser user = await UserManager.GetUserAsync(User); string firstName = user.FirstName; var id = await UserManager.GetUserIdAsync(user); }
+<div class="container">
+    <h1>Add New CE Class</h1>
+
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label>Date</label>
+            <input class="form-control" asp-for="Date" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Time</label>
+            <input class="form-control" asp-for="Time" />
+            <span asp-validation-for="Time" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Instructor</label>
+            <input class="form-control" asp-for="Instructor" />
+            <span asp-validation-for="Instructor" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Type</label>
+            <select class="form-control" asp-for="Type" asp-items="Html.GetEnumSelectList<ClassType>()"></select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Class Title</label>
+            <input class="form-control" asp-for="ClassTitle" />
+            <span asp-validation-for="ClassTitle" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" asp-for="Description" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    @if (ViewBag.Count > 0)
+    {<div class="alert alert-success">@ViewBag.Message</div>}
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

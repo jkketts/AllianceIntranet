@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject UserManager<AppUser> UserManager
-
+@using System.Security.Principal
 
 
 <!DOCTYPE html>
@@ -14,13 +13,12 @@
 
 </head>
 <body>
+
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="#">BHHS Alliance Intranet</a>
 
         @if (User.Identity.IsAuthenticated)
         {
-            AppUser user = await UserManager.GetUserAsync(User); string firstName = user.FirstName; var id = await UserManager.GetUserIdAsync(user);
-
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,19 +27,29 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agent Tools</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a asp-controller="Home" asp-action="AdSubmission" class="dropdown-item">Submit an Ad</a>
-                            <a asp-controller="Home" asp-action="ads" asp-route-id="@id" class="dropdown-item">View Ads Submitted</a>
+                            <a asp-controller="Home" asp-action="ads" class="dropdown-item">View Ads Submitted</a>
                         </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Tools</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="Account" asp-action="Register">Register New Agent</a>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="Agents">Agents</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn" asp-controller="Home" asp-action="AddClass">Add Class</a>
                     </li>
                 </ul>
             </div>
 
             @Html.Partial("_LoginPartial")
         }
-
     </nav>
     @RenderBody()
 
