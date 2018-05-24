@@ -1,7 +1,8 @@
 ﻿{
-    "ConnectionStrings": {
-      "AdConnectionString": "server=(localdb)\\ProjectsV13;Database=AdDb;Integrated Security=true;MultipleActiveResultSets=true;"
-    },
+  "ConnectionStrings": {
+    "AdConnectionString": "dbname=deovvmq9sso1r5 host=ec2-54-235-206-118.compute-1.amazonaws.com port=5432 user=sbnuuypwjytdhm password=a1c737eb5f949c05639775a523760895767984bedc73e99d27ba00de4cf7c340 sslmode=require"
+    //"AdConnectionString": "server=(localdb)\\ProjectsV13;Database=AdDb;Integrated Security=true;MultipleActiveResultSets=true;"
+  },
     "UserSettings": {
       "UserEmail": "justin@ketterman.tv",
       "UserPassword": "P@ssw0rd"

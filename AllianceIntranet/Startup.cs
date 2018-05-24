@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AllianceIntranet.Data;
+﻿using AllianceIntranet.Data;
 using AllianceIntranet.Data.Entities;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace AllianceIntranet
 {
@@ -35,9 +26,13 @@ namespace AllianceIntranet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AdContext>(cfg =>
+            services.AddEntityFrameworkNpgsql().AddDbContext<AdContext>(cfg =>
             {
-                cfg.UseSqlServer(_config.GetConnectionString("AdConnectionString")/*, b=> b.MigrationsAssembly("AllianceIntranet.Data")*/);
+                //string connString = "User ID=sbnuuypwjytdhm;Password=a1c737eb5f949c05639775a523760895767984bedc73e99d27ba00de4cf7c340;Host=ec2-54-235-206-118.compute-1.amazonaws.com;Port=5432;Database=deovvmq9sso1r5;Pooling=true;Use SSL Stream=True;SSL Mode=Require;TrustServerCertificate=True;";
+                //var conn = new NpgsqlConnection(connString);
+//                var connectionString = Configuration["ConnectionStrings:AdConnectionString"];
+                cfg.UseNpgsql("Database=deovvmq9sso1r5; host=ec2-54-235-206-118.compute-1.amazonaws.com; Port=5432; User ID=sbnuuypwjytdhm; Password=a1c737eb5f949c05639775a523760895767984bedc73e99d27ba00de4cf7c340; sslmode=Require; Trust Server Certificate=true");
+                //cfg.UseSqlServer(_config.GetConnectionString("AdConnectionString")/*, b=> b.MigrationsAssembly("AllianceIntranet.Data")*/);
             });
 
 
