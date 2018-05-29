@@ -7,11 +7,12 @@ namespace AllianceIntranet.Data
     {
         //       IEnumerable<Agent> GetAllAgents();
         IEnumerable<AppUser> GetAllAppUsers();
-        IEnumerable<Ad> GetAllAds();
+        ICollection<Ad> GetAllAds();
         void AddEntity(object model);
         bool SaveChanges();
-        IEnumerable<Ad> GetAdsByUser(string id);
-        IEnumerable<CEClass> GetAllClasses();
+        ICollection<Ad> GetAdsByUser(string id);
+        ICollection<CEClass> GetAllClasses();
+        CEClass GetClassById(int id);
 
     }
 }

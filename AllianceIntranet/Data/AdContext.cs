@@ -19,5 +19,24 @@ namespace AllianceIntranet.Data
 
         public DbSet<Ad> Ads { get; set; }
         public DbSet<CEClass> CEClasses { get; set; }
+        public DbSet<RegisteredAgent> RegisteredAgents { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<RegisteredAgent>()
+                .HasKey(t => new { t.AppUserId, t.CEClassId });
+
+            builder.Entity<RegisteredAgent>()
+                .HasOne(t => t.CEClass)
+                .WithMany(t => t.RegisteredAgents)
+                .HasForeignKey(t => t.CEClassId);
+
+            builder.Entity<RegisteredAgent>()
+                .HasOne(t => t.AppUser)
+                .WithMany(t => t.RegisteredAgents)
+                .HasForeignKey(t => t.AppUserId);
+
+            base.OnModelCreating(builder);
+        }
     }
 }

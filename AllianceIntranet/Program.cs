@@ -48,13 +48,13 @@ namespace AllianceIntranet
                                 FirstName = newAppUser.FirstName,
                                 LastName = newAppUser.LastName,
                                 UserName = newAppUser.Email,
+                                Office = newAppUser.Office,
                                 Email = newAppUser.Email
                             };
                             userManager.CreateAsync(newUser, newAppUser.Password).Wait();
                         }
                     }
                     
-
                     IdentityResult roleResult;
                     //Adding Addmin Role    
                     var roleCheck = roleManager.RoleExistsAsync("Admin").Result;
@@ -72,11 +72,8 @@ namespace AllianceIntranet
                     }
 
                     //Assign Admin role to the main User here we have given our newly loregistered login id for Admin management    
-                    AppUser user1 = userManager.FindByEmailAsync("justin@ketterman.tv").Result;
+                    AppUser user1 = userManager.FindByEmailAsync("justin.ketterman@bhhsall.com").Result;
                     userManager.AddToRoleAsync(user1, "Admin").Wait();
-
-                    AppUser user2 = userManager.FindByEmailAsync("afi.ahmed@gmail.com").Result;
-                    userManager.AddToRoleAsync(user2, "Agent").Wait();
 
                 } 
                     catch (Exception ex)
@@ -88,7 +85,6 @@ namespace AllianceIntranet
 
                 host.Run();
             //BuildWebHost(args).Run();
-
 
         }
 
@@ -104,7 +100,5 @@ namespace AllianceIntranet
             builder.Sources.Clear();
             builder.AddJsonFile("config.json", false, true);
         }
-
-
     }
 }

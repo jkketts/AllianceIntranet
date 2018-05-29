@@ -28,10 +28,9 @@ namespace AllianceIntranet
         {
             services.AddEntityFrameworkNpgsql().AddDbContext<AdContext>(cfg =>
             {
-                //string connString = "User ID=sbnuuypwjytdhm;Password=a1c737eb5f949c05639775a523760895767984bedc73e99d27ba00de4cf7c340;Host=ec2-54-235-206-118.compute-1.amazonaws.com;Port=5432;Database=deovvmq9sso1r5;Pooling=true;Use SSL Stream=True;SSL Mode=Require;TrustServerCertificate=True;";
-                //var conn = new NpgsqlConnection(connString);
-//                var connectionString = Configuration["ConnectionStrings:AdConnectionString"];
+                //For connecting to Heroku DB
                 cfg.UseNpgsql("Database=deovvmq9sso1r5; host=ec2-54-235-206-118.compute-1.amazonaws.com; Port=5432; User ID=sbnuuypwjytdhm; Password=a1c737eb5f949c05639775a523760895767984bedc73e99d27ba00de4cf7c340; sslmode=Require; Trust Server Certificate=true");
+                //For local db work
                 //cfg.UseSqlServer(_config.GetConnectionString("AdConnectionString")/*, b=> b.MigrationsAssembly("AllianceIntranet.Data")*/);
             });
 
@@ -51,7 +50,7 @@ namespace AllianceIntranet
                                 .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
-
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

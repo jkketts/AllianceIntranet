@@ -45,7 +45,7 @@ namespace AllianceIntranet.Controllers
             {
                 AppUser AppUser = await _userManager.FindByIdAsync(model.AppUserId);
 
-                var ad = new Ad { DateSubmitted = DateTime.Now, MLSNumber = model.MLSNumber, Street = model.Street, City = model.City, Price = model.Price, AppUser = AppUser};
+                var ad = new Ad(model, AppUser);
 
                 _repo.AddEntity(ad);
                 _repo.SaveChanges();
@@ -73,11 +73,18 @@ namespace AllianceIntranet.Controllers
         [HttpGet("Ads/{id}")]
         public IActionResult Ads(string id)
         {
-            IEnumerable<Ad> ads = _repo.GetAdsByUser(id);
+            if (User.IsInRole("Admin"))
+            {
+                ICollection<Ad> ads = _repo.GetAllAds();
 
-            ViewBag.Message = id;
+                return View(ads);
+            }
+            else
+            {
+                ICollection<Ad> ads = _repo.GetAdsByUser(id);
 
-            return View(ads);
+                return View(ads);
+            }
         }
 
         public IActionResult Ads()
@@ -100,6 +107,7 @@ namespace AllianceIntranet.Controllers
         public IActionResult Classes()
         {
             var ceClasses = _repo.GetAllClasses();
+
             return View(ceClasses);
         }
 
@@ -108,15 +116,7 @@ namespace AllianceIntranet.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ceClass = new CEClass()
-                {
-                    Date = model.Date,
-                    Time = model.Time,
-                    Instructor = model.Instructor,
-                    Type = model.Type,
-                    ClassTitle = model.ClassTitle,
-                    Description = model.Description
-                };
+                var ceClass = new CEClass(model);
 
                 _repo.AddEntity(ceClass);
                 _repo.SaveChanges();
@@ -126,6 +126,20 @@ namespace AllianceIntranet.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost("RegisterClass/{id}")]
+        public async Task<IActionResult> RegisterClass(int id)
+        {
+            var ceClass = _repo.GetClassById(id);
+
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            ceClass.RegisteredAgents.Add( new RegisteredAgent { AppUser = currentUser, CEClass = ceClass });
+
+            _repo.SaveChanges();
+                      
+            return Redirect("/Home/Classes");
         }
 
         [HttpGet]

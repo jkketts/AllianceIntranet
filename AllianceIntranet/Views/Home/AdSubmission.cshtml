@@ -1,10 +1,5 @@
 ﻿@model AdViewModel
 
-@using Microsoft.AspNetCore.Identity
-@using AllianceIntranet.Models
-
-@inject UserManager<AppUser> UserManager
-
 @{AppUser user = await UserManager.GetUserAsync(User); string firstName = user.FirstName; var id = await UserManager.GetUserIdAsync(user); }
 <div class="container">
 

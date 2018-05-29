@@ -1,5 +1,6 @@
 ﻿using AllianceIntranet.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,19 +24,22 @@ namespace AllianceIntranet.Data
             _context.Add(model);
         }
 
-        public IEnumerable<Ad> GetAdsByUser(string id)
+        public ICollection<Ad> GetAdsByUser(string id)
         {
             var ads = from a in _context.Ads
                       where a.AppUser.Id == id
                       select a;
 
-            return ads.ToList();
+            return ads
+                    .Include(s => s.AppUser)
+                    .ToList();
         }
 
-        public IEnumerable<Ad> GetAllAds()
+        public ICollection<Ad> GetAllAds()
         {
-            var ads = _context.Ads.ToList();
-            return ads;
+            var ads = _context.Ads;
+
+            return ads.Include(s => s.AppUser).ToList();
         }
 
         public IEnumerable<AppUser> GetAllAppUsers()
@@ -43,16 +47,24 @@ namespace AllianceIntranet.Data
             return _userManager.Users.ToList();
         }
 
-        public IEnumerable<CEClass> GetAllClasses()
+        public ICollection<CEClass> GetAllClasses()
         {
-            var classes = _context.CEClasses.ToList();
+            var classes = _context.CEClasses.Include(s => s.RegisteredAgents).ToList();
             return classes;
+        }
+
+        public CEClass GetClassById(int id)
+        {
+            var ceClass = from c in _context.CEClasses
+                          where c.Id == id
+                          select c;
+
+            return ceClass.FirstOrDefault();
         }
 
         public bool SaveChanges()
         {
             return _context.SaveChanges() > 0;
         }
-
     }
 }

@@ -33,6 +33,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a asp-controller="Home" asp-action="AdSubmission" class="dropdown-item">Submit an Ad</a>
                             <a asp-controller="Home" asp-action="ads" class="dropdown-item">View Ads Submitted</a>
+                            
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -40,10 +41,9 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" asp-controller="Account" asp-action="Register">Register New Agent</a>
                             <a class="dropdown-item" asp-controller="Account" asp-action="Agents">Agents</a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="AddClass">Add Class</a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="Classes">View Classes</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn" asp-controller="Home" asp-action="AddClass">Add Class</a>
                     </li>
                 </ul>
             </div>

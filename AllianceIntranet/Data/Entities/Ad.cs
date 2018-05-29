@@ -1,14 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AllianceIntranet.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AllianceIntranet.Data.Entities
 {
     public class Ad
     {
-        public int AdId { get; set; }
+        public Ad()
+        {
+        }
+
+        public Ad(AdViewModel model, AppUser appUser)
+        {
+            DateSubmitted = DateTime.Now;
+            MLSNumber = model.MLSNumber;
+            Street = model.Street;
+            City = model.City;
+            Price = model.Price;
+            AppUser = appUser;
+        }
+
+        public int Id { get; set; }
         public DateTime DateSubmitted { get; set; }
         [Required]
         public int MLSNumber { get; set; }

@@ -16,5 +16,6 @@ namespace AllianceIntranet.Data.Entities
 
         public string Office { get; set; }
         public virtual ICollection<Ad> Ads { get; set; }
+        public ICollection<RegisteredAgent> RegisteredAgents { get; set; } = new List<RegisteredAgent>();//Watch how to create many to many relationships
     }
 }

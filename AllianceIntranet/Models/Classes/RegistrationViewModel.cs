@@ -44,5 +44,6 @@ namespace AllianceIntranet.Models
         [Required]
         [Display(Name = "AppUser")]
         public string AppUserId { get; set; }
+        public string Date { get; internal set; }
     }
 }
