@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
 using Microsoft.Extensions.Logging;
 using Microsoft.Exchange.WebServices.Data;
+using AllianceIntranet.Models.Classes;
 
 namespace AllianceIntranet.Controllers
 {
@@ -107,7 +108,7 @@ namespace AllianceIntranet.Controllers
         public IActionResult Classes()
         {
             var ceClasses = _repo.GetAllClasses();
-
+        
             return View(ceClasses);
         }
 
@@ -140,31 +141,7 @@ namespace AllianceIntranet.Controllers
             _repo.SaveChanges();
                       
             return Redirect("/Home/Classes");
-        }
-
-        [HttpGet]
-        public IActionResult SendAnEmail()
-        {
-            var exchange = new ExchangeService();
-            exchange.Credentials = new WebCredentials("justin.ketterman", "Far1on1~Far1on1~", "prua");
-            exchange.Url = new Uri("https://email.bhhsall.com/EWS/Exchange.asmx");
-
-            EmailMessage msg = new EmailMessage(exchange);
-            msg.Subject = "Test";
-            msg.Body = "Test";
-            msg.ToRecipients.Add("justin@ketterman.tv");
-
-            try { 
-                 msg.SendAndSaveCopy();
-                _logger.LogInformation("Message sent succesfsfuly");
-            } catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-            }
-
-            return Redirect("/");
-        }
-        
+        }        
 
     }
 }

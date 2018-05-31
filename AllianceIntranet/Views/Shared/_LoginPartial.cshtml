@@ -8,6 +8,6 @@
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello @firstName</a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a asp-controller="Account" asp-action="Detail" asp-route-id="@id" class="dropdown-item">Profile</a>
-        <a asp-controller="Account" asp-action="Logout" class="dropdown-item">Logout</a>
+        <form method="post"><input type="submit" asp-controller="Account" asp-action="Logout" class="dropdown-item" method="post" value="Logout"/></form>
     </div>
 </li>

@@ -43,14 +43,9 @@ Todo: Create viewModel that has IsRegistered property
                             {
                                 <td><a class="btn btn-primary">Edit</a></td>
                             }
-                            else if (ceClass.RegisteredAgents.Contains<RegisteredAgent>(new RegisteredAgent { AppUserId = id, CEClassId = ceClass.Id }))
-                            {
-                                <td><button class="btn btn-primary">Unreigster</button></td>
-
-                            }
                             else
                             {
-                                <td><form method="post" asp-controller="Home" asp-action="RegisterClass" asp-route-id="@ceClass.Id"><input type="submit" class="btn btn-primary" value="Register" /></form></td>
+                                <td><form method="post" ><input type="submit" asp-controller="Home" asp-action="RegisterClass" asp-route-id="@ceClass.Id" class="btn btn-primary" value="Register" /></form></td>
                             }
                         </tr>
                     }

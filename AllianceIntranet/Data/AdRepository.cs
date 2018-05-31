@@ -66,5 +66,13 @@ namespace AllianceIntranet.Data
         {
             return _context.SaveChanges() > 0;
         }
+
+        public ICollection<RegisteredAgent> GetRegisteredAgents()
+        {
+            var regAgents = _context.RegisteredAgents.ToList();
+
+            return regAgents;
+        }
+
     }
 }

@@ -38,6 +38,18 @@
                             <a class="dropdown-item" asp-controller="Home" asp-action="Classes">Register for CE Classes</a>
                         </div>
                     </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Tools</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Register">Register New Agent</a>
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Agents">Agents</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="AddClass">Add Class</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Classes">View Classes</a>
+                            </div>
+                        </li>
+                    }
                     @Html.Partial("_LoginPartial")
                 </ul>
             </div>

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using AllianceIntranet.Services;
 
 namespace AllianceIntranet
 {
@@ -42,6 +43,7 @@ namespace AllianceIntranet
             services.AddTransient<AppUserSeeder>();
 
             services.AddScoped<IAdRepository, AdRepository>();
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddMvc(config =>
             {

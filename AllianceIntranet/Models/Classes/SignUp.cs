@@ -1,10 +1,20 @@
 ﻿using AllianceIntranet.Data.Entities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace AllianceIntranet.Models
+namespace AllianceIntranet.Models.Classes
 {
-    public class ClassViewModel
+    public class SignUp
     {
+        //public SignUp(CEClass ceClass, )
+
+        [Required]
+        [Display(Name = "Class ID")]
+        public int ClassID { get; set; }
+
         [Required]
         [Display(Name = "Date")]
         public string Date { get; set; }
@@ -29,6 +39,7 @@ namespace AllianceIntranet.Models
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Display(Name = "Is Registered")]
+        public IList<string> RegisteredUsers { get; set; }
     }
-
 }

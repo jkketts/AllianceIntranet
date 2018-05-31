@@ -1,8 +1,8 @@
 ﻿@model AdViewModel
 
 @{AppUser user = await UserManager.GetUserAsync(User); string firstName = user.FirstName; var id = await UserManager.GetUserIdAsync(user); }
-<div class="container">
-
+<div class="container mt-3">
+    <h1>Submit an Ad</h1>
     <div class="alert alert-warning mt-3">If this listing is MLS exempt and you have no MLS number, you must email a copy of the listing agreement and front photo to Allison Maxeiner at amaxeiner@bhhsall.com before the property can be advertised.</div>
 
     <form method="post">
