@@ -1,7 +1,7 @@
 ﻿using AllianceIntranet.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace AllianceIntranet.Models
+namespace AllianceIntranet.Models.CEClasses
 {
     public class ClassViewModel
     {

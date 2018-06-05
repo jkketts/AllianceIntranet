@@ -1,4 +1,5 @@
 ﻿using AllianceIntranet.Models;
+using AllianceIntranet.Models.CEClasses;
 using System.Collections.Generic;
 
 namespace AllianceIntranet.Data.Entities

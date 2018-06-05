@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AllianceIntranet.Models.Classes
+namespace AllianceIntranet.Models.CEClasses
 {
     public class SignUp
     {

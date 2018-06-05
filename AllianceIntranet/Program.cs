@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AllianceIntranet.Data;
 using AllianceIntranet.Data.Entities;
-using AllianceIntranet.Models;
+using AllianceIntranet.Models.Account;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

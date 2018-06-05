@@ -33,9 +33,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agent Tools</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a asp-controller="Home" asp-action="AdSubmission" class="dropdown-item">Submit an Ad</a>
-                            <a asp-controller="Home" asp-action="ads" asp-route-id="@id" class="dropdown-item">View Ads Submitted</a>
-                            <a class="dropdown-item" asp-controller="Home" asp-action="Classes">Register for CE Classes</a>
+                            <a asp-controller="AdSubmission" asp-action="AdSubmission" class="dropdown-item">Submit an Ad</a>
+                            <a asp-controller="AdSubmission" asp-action="ads" asp-route-id="@id" class="dropdown-item">View Ads Submitted</a>
+                            <a class="dropdown-item" asp-controller="CEClass" asp-action="Classes">Register for CE Classes</a>
                         </div>
                     </li>
                     @if (User.IsInRole("Admin"))
@@ -45,8 +45,8 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-controller="Account" asp-action="Register">Register New Agent</a>
                                 <a class="dropdown-item" asp-controller="Account" asp-action="Agents">Agents</a>
-                                <a class="dropdown-item" asp-controller="Home" asp-action="AddClass">Add Class</a>
-                                <a class="dropdown-item" asp-controller="Home" asp-action="Classes">View Classes</a>
+                                <a class="dropdown-item" asp-controller="CEClass" asp-action="Add">Add Class</a>
+                                <a class="dropdown-item" asp-controller="CEClass" asp-action="Classes">View Classes</a>
                             </div>
                         </li>
                     }

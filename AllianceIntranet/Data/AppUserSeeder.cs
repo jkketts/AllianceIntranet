@@ -1,5 +1,5 @@
 ﻿using AllianceIntranet.Data.Entities;
-using AllianceIntranet.Models;
+using AllianceIntranet.Models.Account;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
