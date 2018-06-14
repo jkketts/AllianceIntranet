@@ -67,11 +67,21 @@ namespace AllianceIntranet.Data
             return _context.SaveChanges() > 0;
         }
 
-        public ICollection<RegisteredAgent> GetRegisteredAgents()
+        public List<RegisteredAgent> GetRegisteredAgents()
         {
             var regAgents = _context.RegisteredAgents.ToList();
 
             return regAgents;
+        }
+
+        public void RemoveRegisteredAgent(RegisteredAgent registeredAgent)
+        {
+            var agents = _context.RegisteredAgents.Remove(registeredAgent);
+        }
+
+        public void RemoveClass(CEClass ceClass)
+        {
+            var removeClass = _context.CEClasses.Remove(ceClass);
         }
 
     }

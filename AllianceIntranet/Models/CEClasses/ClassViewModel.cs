@@ -1,7 +1,7 @@
 ﻿using AllianceIntranet.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace AllianceIntranet.Models
+namespace AllianceIntranet.Models.CEClasses
 {
     public class ClassViewModel
     {
@@ -28,6 +28,10 @@ namespace AllianceIntranet.Models
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
+
+        [Required]
+        [Display(Name = "Max Size")]
+        public int MaxSize { get; set; }
 
     }
 

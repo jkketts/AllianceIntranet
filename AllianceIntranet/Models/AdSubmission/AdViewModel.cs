@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AllianceIntranet.Models
+namespace AllianceIntranet.Models.AdSubmission
 {
     public class AdViewModel
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AllianceIntranet.Data;
 using AllianceIntranet.Data.Entities;
-using AllianceIntranet.Models;
+using AllianceIntranet.Models.Account;
 using AllianceIntranet.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -149,7 +149,7 @@ namespace AllianceIntranet.Controllers
             return View(newUser);
         }
 
-        [HttpGet("Edit/{id}")]
+        [HttpGet("Account/Edit/{id}")]
         public IActionResult Edit(string id)
         {
             var agent = _userManager.FindByIdAsync(id).Result;
@@ -161,13 +161,13 @@ namespace AllianceIntranet.Controllers
                 roles.Add("Agent");
             }
 
-            EditViewModel updatedUser = new EditViewModel() {FirstName = agent.FirstName, LastName = agent.LastName, Email = agent.Email, Office = agent.Office, Role = roles.First() };
+            AccountEditViewModel updatedUser = new AccountEditViewModel() {FirstName = agent.FirstName, LastName = agent.LastName, Email = agent.Email, Office = agent.Office, Role = roles.First() };
 
             return View(updatedUser);
         }
         
-        [HttpPost("Edit/{id}")]
-        public async Task<IActionResult> Edit(string id, EditViewModel model)
+        [HttpPost("Account/Edit/{id}")]
+        public async Task<IActionResult> Edit(string id, AccountEditViewModel model)
         {
             var agent = _userManager.FindByIdAsync(id).Result;
 
@@ -273,5 +273,38 @@ namespace AllianceIntranet.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult UpdateAddress()
+        {
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+
+            var userViewModel = new UpdateAddressViewModel(user);
+
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateAddress(UpdateAddressViewModel model)
+        {
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+
+            if (ModelState.IsValid)
+            {
+                user.Street = model.Street;
+                user.City = model.City;
+                user.State = model.State;
+                user.Zip = model.Zip;
+                user.PhoneNumber = model.Phone;
+                user.LastModified = System.DateTime.Now;
+
+                _repo.SaveChanges();
+            }
+            else
+            {
+                return View();
+            }
+
+            return Redirect("/CEClass/classes");
+        }
     }
 }

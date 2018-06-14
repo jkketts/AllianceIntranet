@@ -14,6 +14,12 @@ namespace AllianceIntranet.Data.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+        public DateTime LastModified { get; set; }
+
         public string Office { get; set; }
         public virtual ICollection<Ad> Ads { get; set; }
         public ICollection<RegisteredAgent> RegisteredAgents { get; set; } = new List<RegisteredAgent>();//Watch how to create many to many relationships

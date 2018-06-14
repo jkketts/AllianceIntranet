@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AllianceIntranet.Models
+namespace AllianceIntranet.Models.Account
 {
     public class ResetPasswordViewModel
     {

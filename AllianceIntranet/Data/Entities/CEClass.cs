@@ -1,4 +1,5 @@
 ﻿using AllianceIntranet.Models;
+using AllianceIntranet.Models.CEClasses;
 using System.Collections.Generic;
 
 namespace AllianceIntranet.Data.Entities
@@ -17,6 +18,7 @@ namespace AllianceIntranet.Data.Entities
             Type = model.Type;
             ClassTitle = model.ClassTitle;
             Description = model.Description;
+            MaxSize = model.MaxSize;
         }
 
         public int Id { get; set; }
@@ -26,6 +28,7 @@ namespace AllianceIntranet.Data.Entities
         public ClassType Type { get; set; }
         public string ClassTitle { get; set; }
         public string Description { get; set; }
+        public int MaxSize { get; set; }
 
         public ICollection<RegisteredAgent> RegisteredAgents { get; set; } = new List<RegisteredAgent>();
     }
