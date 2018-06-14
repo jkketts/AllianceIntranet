@@ -1,0 +1,42 @@
+﻿@model UpdateAddressViewModel
+<div class="container">
+    <h2>Update Address</h2>
+    <h4>It looks like it has been a while since you have updated your address. If the info below looks correct, click "continue". Otherwise, make the changes below and click "continue".</h4>
+    <p>We need this information for CE classes in case we need to get in touch with you regarding your class.</p>
+    <br />
+    <h4>@Model.FirstName @Model.LastName</h4>
+    <form method="post">
+        <div class="form-group">
+            <label>Street</label>
+            <input class="form-control" value="@Model.Street" asp-for="Street" />
+            <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>City</label>
+            <input class="form-control" value="@Model.City" asp-for="City" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>State</label>
+            <input class="form-control" value="@Model.State"  asp-for="State" />
+            <span asp-validation-for="State" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Zip</label>
+            <input class="form-control" value="@Model.Zip"  asp-for="Zip" />
+            <span asp-validation-for="Zip" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input class="form-control" value="@Model.Phone"  asp-for="Phone" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Continue</button>
+    </form>
+</div>
+
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+

@@ -10,7 +10,16 @@ Todo: Create viewModel that has IsRegistered property
     <div class="row">
         <div class="col-12">
             <h1>Continuing Education Classes</h1>
-
+            <h4>License Renewal</h4>    
+            <p>12 hours of CE are required, with a minimum of three core hours. Ethics also counts towards your elective.</p>
+            <h4>Deadlines</h4>
+            <table>
+                <tr><td>Broker:</td><td>6/30/18</td></tr>
+                <tr><td>Salesperson:</td><td>9/30/18</td></tr>
+                <tr><td>NAR Ethics 2 Year Requirement Course:</td><td>12/31/18</td></tr>
+            </table>
+            <br />
+            <h4>Classes</h4>
             <table class="table">
                 <thead>
                     <tr>
@@ -21,7 +30,8 @@ Todo: Create viewModel that has IsRegistered property
                         <th>Class Title</th>
                         @if (User.IsInRole("Admin"))
                         {
-                            <th>Edit Class</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         }
                         else
                         {
@@ -37,21 +47,24 @@ Todo: Create viewModel that has IsRegistered property
                         <td>@ceClass.Time</td>
                         <td>@ceClass.Instructor</td>
                         <td>@ceClass.Type</td>
-                        <td>@ceClass.ClassTitle</td>
+                        <td><a asp-controller="CEClass" asp-action="Detail" asp-route-id="@ceClass.Id">@ceClass.ClassTitle</a></td>
 
                         @if (User.IsInRole("Admin"))
                         {
-                        <td><p><a asp-controller="CEClass" asp-action="Edit" asp-route-id="@ceClass.Id">Edit</a> | <form method="post"><input type="submit" asp-controller="CEClass" asp-action="Delete" asp-route-id="@ceClass.Id" value="Delete" onclick="if(!confirm(`Are you sure you want to delete this item?`)) return false;" /></form></p></td>
+                        <td><a class="btn btn-outline-secondary" asp-controller="CEClass" asp-action="Edit" asp-route-id="@ceClass.Id">Edit</a></td>
+                        <td><form method="post"><input class="btn btn-outline-danger" type="submit" asp-controller="CEClass" asp-action="Delete" asp-route-id="@ceClass.Id" value="Delete" onclick="if(!confirm(`Are you sure you want to delete this item?`)) return false;" /></form></td>
                         }
                         else
                         {
                         @if (ceClass.RegisteredAgents.Any(n => n.AppUserId == id && n.CEClassId == ceClass.Id))
                             {
                         <td><form method="post"><input type="submit" asp-controller="CEClass" asp-action="Unregister" asp-route-id="@ceClass.Id" class="btn btn-primary" value="Unregister" /></form></td>
-                            }
-                            else
-                            {
-
+                        }
+                        else if(ceClass.RegisteredAgents.Count() >= ceClass.MaxSize){
+                            <td>Class is Full</td>
+                        }
+                        else
+                        {
                         <td><form method="post"><input type="submit" asp-controller="CEClass" asp-action="Register" asp-route-id="@ceClass.Id" class="btn btn-primary" value="Register" /></form></td>
                             }
                         }

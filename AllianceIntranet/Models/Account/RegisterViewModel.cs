@@ -36,5 +36,20 @@ namespace AllianceIntranet.Models.Account
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Street")]
+        public string Street { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "State")]
+        public string State { get; set; }
+
+        [Display(Name = "Zip")]
+        public string Zip { get; set; }
+
+        [Display(Name = "Phone")]
+        public string Phone { get; set; }
     }
+
 }
