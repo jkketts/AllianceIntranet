@@ -273,5 +273,38 @@ namespace AllianceIntranet.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult UpdateAddress()
+        {
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+
+            var userViewModel = new UpdateAddressViewModel(user);
+
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateAddress(UpdateAddressViewModel model)
+        {
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+
+            if (ModelState.IsValid)
+            {
+                user.Street = model.Street;
+                user.City = model.City;
+                user.State = model.State;
+                user.Zip = model.Zip;
+                user.PhoneNumber = model.Phone;
+                user.LastModified = System.DateTime.Now;
+
+                _repo.SaveChanges();
+            }
+            else
+            {
+                return View(model);
+            }
+
+            return Redirect("/CEClass/classes");
+        }
     }
 }

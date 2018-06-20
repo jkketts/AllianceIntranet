@@ -18,6 +18,7 @@ namespace AllianceIntranet.Models.CEClasses
             Type = ceClass.Type;
             ClassTitle = ceClass.ClassTitle;
             Description = ceClass.Description;
+            MaxSize = ceClass.MaxSize;
         }
 
         [Display(Name = "Date")]
@@ -37,5 +38,8 @@ namespace AllianceIntranet.Models.CEClasses
         
         [Display(Name = "Description")]
         public string Description { get; set; }
+
+        [Display(Name = "Max Size")]
+        public int MaxSize { get; set; }
     }
 }

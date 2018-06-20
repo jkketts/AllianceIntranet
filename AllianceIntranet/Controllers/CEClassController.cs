@@ -1,14 +1,17 @@
 ﻿using AllianceIntranet.Data;
 using AllianceIntranet.Data.Entities;
 using AllianceIntranet.Models.CEClasses;
+using AllianceIntranet.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using RazorLight;
+using AllianceIntranet.Models.EmailTemplates;
 
 namespace AllianceIntranet.Controllers
 {
@@ -17,12 +20,16 @@ namespace AllianceIntranet.Controllers
         private readonly IAdRepository _repo;
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<CEClassController> _logger;
+        private readonly IEmailSender _emailSender;
+        private readonly IRazorLightEngine _engine;
 
-        public CEClassController(IAdRepository repo, UserManager<AppUser> userManager, ILogger<CEClassController> logger)
+        public CEClassController(IAdRepository repo, UserManager<AppUser> userManager, ILogger<CEClassController> logger, IEmailSender emailSender, IRazorLightEngine engine)
         {
             _repo = repo;
             _userManager = userManager;
             _logger = logger;
+            _emailSender = emailSender;
+            _engine = engine;
         }
 
         public IActionResult Register()
@@ -36,8 +43,18 @@ namespace AllianceIntranet.Controllers
             return View();
         }
 
-        public IActionResult Classes()
+        public async Task<IActionResult> Classes()
         {
+            var user = await _userManager.GetUserAsync(User);
+            //Change to days, but for now use seconds
+            var diffInDays = (System.DateTime.Now - user.LastModified).TotalDays;
+
+
+            if ((!User.IsInRole("Admin") && diffInDays > 180) || user.LastModified == null)
+            {
+                return Redirect("/Account/UpdateAddress");
+            }
+
             var ceClasses = _repo.GetAllClasses();
 
             return View(ceClasses);
@@ -67,11 +84,17 @@ namespace AllianceIntranet.Controllers
         {
             var ceClass = _repo.GetClassById(id);
 
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            if (ceClass.RegisteredAgents.Count() < ceClass.MaxSize) { 
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-            ceClass.RegisteredAgents.Add(new RegisteredAgent { AppUser = currentUser, CEClass = ceClass });
+                ceClass.RegisteredAgents.Add(new RegisteredAgent { AppUser = currentUser, CEClass = ceClass });
 
-            _repo.SaveChanges();
+                var emailRegisterViewModel = new EmailRegisterViewModel(ceClass);
+                
+                _emailSender.SendEmailAsync("justin.ketterman@bhhsall.com", $"Registered for {ceClass.ClassTitle}", "RegisteredClass", emailRegisterViewModel);
+
+                _repo.SaveChanges();
+            }
 
             return Redirect("/CEClass/Classes");
         }
@@ -90,6 +113,10 @@ namespace AllianceIntranet.Controllers
                 if (r.AppUserId == currentUser.Id && r.CEClassId == ceClass.Id)
                 {
                     _repo.RemoveRegisteredAgent(r);
+
+                    var emailRegisterViewModel = new EmailRegisterViewModel(ceClass);
+                    _emailSender.SendEmailAsync("justin.ketterman@bhhsall.com", $"Unregistered for {ceClass.ClassTitle}", "UnregisteredClass", emailRegisterViewModel);
+                    break;
                 }
             }
 
@@ -105,9 +132,14 @@ namespace AllianceIntranet.Controllers
         {
             var ceClass = _repo.GetClassById(id);
 
-            var editCEClass = new EditViewModel(ceClass);
+            if (ceClass != null)
+            {
+                var editCEClass = new EditViewModel(ceClass);
 
-            return View(editCEClass);
+                return View(editCEClass);
+            }
+
+            return Redirect("/CEClass/Classes");
         }
 
         [Authorize(Roles = "Admin")]
@@ -124,6 +156,7 @@ namespace AllianceIntranet.Controllers
                 ceClass.Type = model.Type;
                 ceClass.ClassTitle = model.ClassTitle;
                 ceClass.Description = model.Description;
+                ceClass.MaxSize = model.MaxSize;
 
                 _repo.SaveChanges();
             }
@@ -137,11 +170,39 @@ namespace AllianceIntranet.Controllers
         {
             var ceClass = _repo.GetClassById(id);
 
-            _repo.RemoveClass(ceClass);
+            if (ceClass != null)
+            {
+                _repo.RemoveClass(ceClass);
 
-            _repo.SaveChanges();
+                _repo.SaveChanges();
+            }
 
             return Redirect("/CEClass/classes");
+        }
+
+        [HttpGet("CEClass/Detail/{id}")]
+        public IActionResult Detail(int id)
+        {
+            var ceClass = _repo.GetClassById(id);
+
+            if (ceClass != null)
+            {
+                var registeredAgents = _repo.GetRegisteredAgents().Where(n => n.CEClassId == ceClass.Id);
+
+                List<AppUser> appUsersInRegisteredAgents = new List<AppUser>();
+
+                foreach (var r in registeredAgents)
+                {
+                    var appUser = _userManager.FindByIdAsync(r.AppUserId).Result;
+                    appUsersInRegisteredAgents.Add(appUser);
+                }
+
+                var Detail = new DetailViewModel(ceClass, appUsersInRegisteredAgents);
+
+                return View(Detail);
+            }
+
+            return Redirect("/CEClass/Classes");
         }
     }
 }

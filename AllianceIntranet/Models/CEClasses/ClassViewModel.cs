@@ -29,6 +29,10 @@ namespace AllianceIntranet.Models.CEClasses
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Required]
+        [Display(Name = "Max Size")]
+        public int MaxSize { get; set; }
+
     }
 
 }
