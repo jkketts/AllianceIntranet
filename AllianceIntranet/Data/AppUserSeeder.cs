@@ -69,7 +69,7 @@ namespace AllianceIntranet.Data
                         Zip = newAppUser.Zip,
                         PhoneNumber = newAppUser.Phone
                     };
-                    newUser.LastModified = System.DateTime.Now;
+                    newUser.LastModified = System.DateTime.Now.AddDays(-181);
                     _userManager.CreateAsync(newUser, newAppUser.Password).Wait();
                     _userManager.AddToRoleAsync(newUser, "Agent").Wait();
                 }

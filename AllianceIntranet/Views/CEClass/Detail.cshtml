@@ -1,10 +1,10 @@
 ﻿@model DetailViewModel
-@{}
+@{ ViewData["Title"] = "CE Class Details";}
 
 
 @{AppUser user = await UserManager.GetUserAsync(User); string firstName = user.FirstName; var id = await UserManager.GetUserIdAsync(user); }
 <div class="container">
-    <h2>@Model.ClassTitle</h2>
+    <h2>Details for @Model.ClassTitle</h2>
 
     <h4>Date and Time</h4>
     <p>@Model.Date at @Model.Time</p>
@@ -19,23 +19,31 @@
 
     @if (User.IsInRole("Admin"))
     {
-        <h4>Agents Currently Enrolled</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Agent Name</th>
-                    <th>Agent Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var r in Model.RegisteredAgents)
-                {
+        <h4 class="mt-3">Agents Currently Enrolled</h4>
+        @if (Model.RegisteredAgents.Any())
+        {
+            <table>
+                <thead>
                     <tr>
-                        <td>@r.FirstName @r.LastName</td>
-                        <td>@r.Email</td>
+                        <th>Agent Name</th>
+                        <th>Agent Email</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.RegisteredAgents)
+                    {
+                        <tr>
+                            <td>@r.FirstName @r.LastName</td>
+                            <td>@r.Email</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        } else
+        {
+            <p>Currently, no agents are registered for this class.</p>
+
+        }
+
     }
 </div>

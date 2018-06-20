@@ -1,4 +1,5 @@
 ﻿@model AdViewModel
+@{ ViewData["Title"] = "Submit Ads";}
 
 @{AppUser user = await UserManager.GetUserAsync(User); string firstName = user.FirstName; var id = await UserManager.GetUserIdAsync(user); }
 <div class="container mt-3">

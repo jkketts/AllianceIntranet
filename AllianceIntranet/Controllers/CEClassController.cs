@@ -47,10 +47,10 @@ namespace AllianceIntranet.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             //Change to days, but for now use seconds
-            var diffInSeconds = (System.DateTime.Now - user.LastModified).TotalSeconds;
+            var diffInDays = (System.DateTime.Now - user.LastModified).TotalDays;
 
 
-            if ((!User.IsInRole("Admin") && diffInSeconds > 20) || user.LastModified == null)
+            if ((!User.IsInRole("Admin") && diffInDays > 180) || user.LastModified == null)
             {
                 return Redirect("/Account/UpdateAddress");
             }
@@ -132,9 +132,14 @@ namespace AllianceIntranet.Controllers
         {
             var ceClass = _repo.GetClassById(id);
 
-            var editCEClass = new EditViewModel(ceClass);
+            if (ceClass != null)
+            {
+                var editCEClass = new EditViewModel(ceClass);
 
-            return View(editCEClass);
+                return View(editCEClass);
+            }
+
+            return Redirect("/CEClass/Classes");
         }
 
         [Authorize(Roles = "Admin")]
@@ -165,9 +170,12 @@ namespace AllianceIntranet.Controllers
         {
             var ceClass = _repo.GetClassById(id);
 
-            _repo.RemoveClass(ceClass);
+            if (ceClass != null)
+            {
+                _repo.RemoveClass(ceClass);
 
-            _repo.SaveChanges();
+                _repo.SaveChanges();
+            }
 
             return Redirect("/CEClass/classes");
         }
@@ -177,19 +185,24 @@ namespace AllianceIntranet.Controllers
         {
             var ceClass = _repo.GetClassById(id);
 
-            var registeredAgents = _repo.GetRegisteredAgents().Where(n => n.CEClassId == ceClass.Id);
-
-            List<AppUser> appUsersInRegisteredAgents = new List<AppUser>();
-
-            foreach (var r in registeredAgents)
+            if (ceClass != null)
             {
-                var appUser = _userManager.FindByIdAsync(r.AppUserId).Result;
-                appUsersInRegisteredAgents.Add(appUser);
+                var registeredAgents = _repo.GetRegisteredAgents().Where(n => n.CEClassId == ceClass.Id);
+
+                List<AppUser> appUsersInRegisteredAgents = new List<AppUser>();
+
+                foreach (var r in registeredAgents)
+                {
+                    var appUser = _userManager.FindByIdAsync(r.AppUserId).Result;
+                    appUsersInRegisteredAgents.Add(appUser);
+                }
+
+                var Detail = new DetailViewModel(ceClass, appUsersInRegisteredAgents);
+
+                return View(Detail);
             }
 
-            var Detail = new DetailViewModel(ceClass, appUsersInRegisteredAgents);
-
-            return View(Detail);
+            return Redirect("/CEClass/Classes");
         }
     }
 }

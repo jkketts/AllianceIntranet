@@ -1,4 +1,6 @@
 ﻿@model UpdateAddressViewModel
+@{ ViewData["Title"] = "Update Address";}
+
 <div class="container">
     <h2>Update Address</h2>
     <h4>It looks like it has been a while since you have updated your address. If the info below looks correct, click "continue". Otherwise, make the changes below and click "continue".</h4>
@@ -18,17 +20,17 @@
         </div>
         <div class="form-group">
             <label>State</label>
-            <input class="form-control" value="@Model.State"  asp-for="State" />
+            <input class="form-control" value="@Model.State" asp-for="State" />
             <span asp-validation-for="State" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label>Zip</label>
-            <input class="form-control" value="@Model.Zip"  asp-for="Zip" />
+            <input class="form-control" value="@Model.Zip" asp-for="Zip" />
             <span asp-validation-for="Zip" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label>Phone</label>
-            <input class="form-control" value="@Model.Phone"  asp-for="Phone" />
+            <input class="form-control" value="@Model.Phone" asp-for="Phone" />
             <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
 
@@ -36,7 +38,7 @@
     </form>
 </div>
 
-    @section Scripts {
-        @await Html.PartialAsync("_ValidationScriptsPartial")
-    }
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
 

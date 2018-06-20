@@ -301,7 +301,7 @@ namespace AllianceIntranet.Controllers
             }
             else
             {
-                return View();
+                return View(model);
             }
 
             return Redirect("/CEClass/classes");

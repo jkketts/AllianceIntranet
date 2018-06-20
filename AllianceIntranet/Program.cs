@@ -33,7 +33,7 @@ namespace AllianceIntranet
                     catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "Shit's borked.");
+                    logger.LogError(ex, "Seeder failed.");
                 }
             }
             
