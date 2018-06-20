@@ -1,11 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Title</title>
+    <title>@ViewData["Title"]</title>
     <!-- inside <head> -->
     <link rel="stylesheet" href="~/vendor.min.css" />
     <link rel="stylesheet" href="~/site.css" />
@@ -16,7 +15,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">BHHS Alliance Intranet</a>
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">BHHS Alliance Intranet</a>
 
         @if (User.Identity.IsAuthenticated)
         {
