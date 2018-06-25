@@ -200,15 +200,27 @@ namespace AllianceIntranet.Controllers
             return View();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult DoesNotExist()
+        {
+            //I understand this is against best practices, but since there is nothing malicious that can be done even if you get into the site, I'm willing to take the risk.
+            return View();
+        }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) 
             {
-
-
                 var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if(user == null)
+                {
+                    return Redirect("/Account/DoesNotExist");
+                }
+
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
                 //Change this to my email service through exchange
