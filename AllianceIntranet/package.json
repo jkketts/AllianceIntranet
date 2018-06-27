@@ -1,11 +1,28 @@
 {
+  "name": "allianceintranet",
   "version": "1.0.0",
-  "name": "asp.net",
-  "private": true,
+  "description": "",
+  "main": "index.js",
   "devDependencies": {
-    "bootstrap": "~4.1.0",
-    "jquery": "~3.3.1",
-    "popper.js": "~1.14.3",
-    "webpack": "^4.12.1"
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3",
+    "webpack": "^4.12.1",
+    "webpack-cli": "^3.0.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
   }
 }
