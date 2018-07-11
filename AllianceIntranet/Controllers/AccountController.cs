@@ -88,8 +88,6 @@ namespace AllianceIntranet.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
-            
-
             return View();
         }
 
