@@ -1,19 +1,23 @@
 ﻿using AllianceIntranet.Data.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace AllianceIntranet.Models.Classes
+namespace AllianceIntranet.Models.EmailTemplates
 {
-    public class SignUp
+    public class EmailRegisterViewModel
     {
-        //public SignUp(CEClass ceClass, )
+        public EmailRegisterViewModel()
+        {
+        }
 
-        [Required]
-        [Display(Name = "Class ID")]
-        public int ClassID { get; set; }
+        public EmailRegisterViewModel(CEClass ceClass)
+        {
+            Date = ceClass.Date;
+            Time = ceClass.Time;
+            Instructor = ceClass.Instructor;
+            Type = ceClass.Type;
+            ClassTitle = ceClass.ClassTitle;
+            Description = ceClass.Description;
+        }
 
         [Required]
         [Display(Name = "Date")]
@@ -38,8 +42,6 @@ namespace AllianceIntranet.Models.Classes
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
-
-        [Display(Name = "Is Registered")]
-        public IList<string> RegisteredUsers { get; set; }
     }
+
 }

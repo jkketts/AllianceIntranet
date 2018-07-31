@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using AllianceIntranet.Services;
+using System;
+using RazorLight;
+using System.IO;
 
 namespace AllianceIntranet
 {
@@ -30,9 +32,12 @@ namespace AllianceIntranet
             services.AddEntityFrameworkNpgsql().AddDbContext<AdContext>(cfg =>
             {
                 //For connecting to Heroku DB
-                cfg.UseNpgsql("Database=deovvmq9sso1r5; host=ec2-54-235-206-118.compute-1.amazonaws.com; Port=5432; User ID=sbnuuypwjytdhm; Password=a1c737eb5f949c05639775a523760895767984bedc73e99d27ba00de4cf7c340; sslmode=Require; Trust Server Certificate=true");
-                //For local db work
-                //cfg.UseSqlServer(_config.GetConnectionString("AdConnectionString")/*, b=> b.MigrationsAssembly("AllianceIntranet.Data")*/);
+                Connection connection = new Connection();
+                var envVar = Environment.GetEnvironmentVariable("DATABASE_URL");
+                var connectionString = connection.GetConnection(envVar);
+
+                cfg.UseNpgsql(connectionString);
+
             });
 
 
@@ -44,6 +49,12 @@ namespace AllianceIntranet
 
             services.AddScoped<IAdRepository, AdRepository>();
             services.AddScoped<IEmailSender, EmailSender>();
+
+            services.AddSingleton<IRazorLightEngine>(f =>
+            {
+                return (new EngineFactory())
+                    .ForFileSystem(Path.Combine(Directory.GetCurrentDirectory(), "EmailTemplates"/*, "RegisteredClass.cshtml"*/));
+            });
 
             services.AddMvc(config =>
             {

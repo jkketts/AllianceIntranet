@@ -1,4 +1,5 @@
 ﻿@model ClassViewModel
+@{ ViewData["Title"] = "Add CE Class";}
 
 @using Microsoft.AspNetCore.Identity
 @using AllianceIntranet.Models
@@ -40,6 +41,11 @@
             <label>Description</label>
             <input class="form-control" asp-for="Description" />
             <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Max Number of Students</label>
+            <input class="form-control" asp-for="MaxSize" />
+            <span asp-validation-for="MaxSize" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace AllianceIntranet.Models
+namespace AllianceIntranet.Models.Account
 {
-    public class EditViewModel
+    public class AccountEditViewModel
     {
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

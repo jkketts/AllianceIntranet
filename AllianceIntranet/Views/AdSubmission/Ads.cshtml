@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model ICollection<Ad>
+@{ ViewData["Title"] = "Ads";}
+
+<div class="container mt-3">
+    <h1>Ads Submitted</h1>
+
+    @if (!Model.Any())
+    {
+        <p>Currently, no ads have been submitted.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date Submitted</th>
+                    <th>MLS Number</th>
+                    <th>Street</th>
+                    <th>City</th>
+                    <th>Price</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th>Agent Name</th>
+                        <th>Agent Office</th>
+                    }
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (User.IsInRole("Admin"))
+                {
+                    @foreach (var ad in Model)
+                    {
+                        <tr>
+                            <td scope="row">@ad.DateSubmitted</td>
+                            <td>@ad.MLSNumber</td>
+                            <td>@ad.Street</td>
+                            <td>@ad.City</td>
+                            <td>@ad.Price</td>
+                            <td>@ad.AppUser.FirstName @ad.AppUser.LastName</td>
+                            <td>@ad.AppUser.Office</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+
+                    @foreach (var ad in Model)
+                    {
+                        <tr>
+                            <td scope="row">@ad.DateSubmitted</td>
+                            <td>@ad.MLSNumber</td>
+                            <td>@ad.Street</td>
+                            <td>@ad.City</td>
+                            <td>@ad.Price</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    </div>

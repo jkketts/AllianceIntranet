@@ -1,13 +1,16 @@
 ﻿@model UserViewModel
+@{ ViewData["Title"] = "Account Detail";}
+<div class="container">
 
-<h1>User Detail</h1>
+    <h1>User Detail</h1>
 
-<h2>Name: @Model.FirstName @Model.LastName</h2>
-<h2>Email: @Model.Email</h2>
-<h2>Office: @Model.Office</h2>
-<h2>Role: @Model.Role</h2>
+    <p><strong>Name: </strong>@Model.FirstName @Model.LastName</p>
+    <p><strong>Email: </strong>@Model.Email</p>
+    <p><strong>Office: </strong>@Model.Office</p>
+    <p><strong>Role: </strong>@Model.Role</p>
 
-@if (@Context.User.IsInRole("Admin"))
-{
-    <a asp-controller="Account" asp-action="Edit" asp-route-id="@Model.UserId" class="btn btn-primary">Edit</a>
-}
+    @if (@Context.User.IsInRole("Admin"))
+    {
+        <a asp-controller="Account" asp-action="Edit" asp-route-id="@Model.UserId" class="btn btn-primary">Edit</a>
+    }
+</div>

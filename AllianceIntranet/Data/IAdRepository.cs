@@ -13,7 +13,9 @@ namespace AllianceIntranet.Data
         ICollection<Ad> GetAdsByUser(string id);
         ICollection<CEClass> GetAllClasses();
         CEClass GetClassById(int id);
-        ICollection<RegisteredAgent> GetRegisteredAgents();
+        List<RegisteredAgent> GetRegisteredAgents();
+        void RemoveRegisteredAgent(RegisteredAgent registeredAgent);
+        void RemoveClass(CEClass ceClass);
         
     }
 }

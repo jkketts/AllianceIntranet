@@ -1,8 +1,10 @@
-﻿@model EditViewModel
+﻿@model AccountEditViewModel
+@{ ViewData["Title"] = "Edit Account";}
 <!-- Remove password, should be auto set as "A!!iance"; Add Office; Add Role -->
 
 <div class="container">
-    <h1 class="mt-3">Register</h1>
+    <h1 class="mt-3">Edit</h1>
+    <h5>Make the changes below and press "Update" to confirm the changes.</h5>
     <form method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">

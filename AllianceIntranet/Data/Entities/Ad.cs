@@ -1,4 +1,5 @@
 ﻿using AllianceIntranet.Models;
+using AllianceIntranet.Models.AdSubmission;
 using System;
 using System.ComponentModel.DataAnnotations;
 
