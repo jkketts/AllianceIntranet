@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
-@model ICollection<Ad>
-@{ ViewData["Title"] = "Ads";}
+@model ICollection<OpenHouse>
+@{ ViewData["Title"] = "Open Houses";}
 
 <div class="container mt-3">
     <h1>Ads Submitted</h1>
@@ -19,12 +19,13 @@
                     <th>MLS Number</th>
                     <th>Street</th>
                     <th>City</th>
+                    <th>Day</th>
+                    <th>Time Open</th>
                     <th>Price</th>
                     @if (User.IsInRole("Admin"))
                     {
                         <th>Agent Name</th>
                         <th>Agent Office</th>
-                        <th>Agent Email</th>
                     }
                 </tr>
             </thead>
@@ -32,31 +33,31 @@
             <tbody>
                 @if (User.IsInRole("Admin"))
                 {
-                    @foreach (var ad in Model)
+                    @foreach (var openHouse in Model)
                     {
                         <tr>
-                            <td scope="row">@ad.DateSubmitted</td>
-                            <td>@ad.MLSNumber</td>
-                            <td>@ad.Street</td>
-                            <td>@ad.City</td>
-                            <td>@ad.Price</td>
-                            <td>@ad.AppUser.FirstName @ad.AppUser.LastName</td>
-                            <td>@ad.AppUser.Office</td>
-                            <td>@ad.AppUser.Email</td>
+                            <td scope="row">@openHouse.DateSubmitted</td>
+                            <td>@openHouse.MLSNumber</td>
+                            <td>@openHouse.Street</td>
+                            <td>@openHouse.City</td>
+                            <td>@openHouse.Day</td>
+                            <td>@openHouse.TimeOpen</td>
+                            <td>@openHouse.AppUser.FirstName @openHouse.AppUser.LastName</td>
+                            <td>@openHouse.AppUser.Office</td>
                         </tr>
                     }
                 }
                 else
                 {
 
-                    @foreach (var ad in Model)
+                    @foreach (var openHouse in Model)
                     {
                         <tr>
-                            <td scope="row">@ad.DateSubmitted</td>
-                            <td>@ad.MLSNumber</td>
-                            <td>@ad.Street</td>
-                            <td>@ad.City</td>
-                            <td>@ad.Price</td>
+                            <td scope="row">@openHouse.DateSubmitted</td>
+                            <td>@openHouse.MLSNumber</td>
+                            <td>@openHouse.Street</td>
+                            <td>@openHouse.City</td>
+                            <td>@openHouse.Price</td>
                         </tr>
                     }
                 }

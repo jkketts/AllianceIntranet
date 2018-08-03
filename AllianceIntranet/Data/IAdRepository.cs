@@ -5,7 +5,6 @@ namespace AllianceIntranet.Data
 {
     public interface IAdRepository
     {
-        //       IEnumerable<Agent> GetAllAgents();
         IEnumerable<AppUser> GetAllAppUsers();
         ICollection<Ad> GetAllAds();
         void AddEntity(object model);
@@ -16,6 +15,9 @@ namespace AllianceIntranet.Data
         List<RegisteredAgent> GetRegisteredAgents();
         void RemoveRegisteredAgent(RegisteredAgent registeredAgent);
         void RemoveClass(CEClass ceClass);
-        
+
+        ICollection<OpenHouse> GetOpenHousesByUser(string id);
+        ICollection<OpenHouse> GetAllOpenHouses();
+
     }
 }

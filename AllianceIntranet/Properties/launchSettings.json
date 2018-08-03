@@ -12,11 +12,11 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASE_URL": "postgres://sbnuuypwjytdhm:a1c737eb5f949c05639775a523760895767984bedc73e99d27ba00de4cf7c340@ec2-54-235-206-118.compute-1.amazonaws.com:5432/deovvmq9sso1r5",
+        "DATABASE_URL": "postgres://ddfdlmpigpfqrz:57b047769e9f9dfd747438d5709f851500ffac6082de020605e50602626209c0@ec2-54-225-103-167.compute-1.amazonaws.com:5432/d28drm1sl219nt",
+        "EMAIL_PASSWORD": "farion",
+        "EMAIL_DOMAIN": "prua",
         "EMAIL_USERNAME": "justin.ketterman",
-        "EMAIL_PASSWORD": "Far1on1~Far1on1~",
-        "EMAIL_DOMAIN": "prua"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "AllianceIntranet": {

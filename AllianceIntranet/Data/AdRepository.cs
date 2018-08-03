@@ -28,6 +28,7 @@ namespace AllianceIntranet.Data
         {
             var ads = from a in _context.Ads
                       where a.AppUser.Id == id
+                      orderby a.DateSubmitted descending
                       select a;
 
             return ads
@@ -39,7 +40,7 @@ namespace AllianceIntranet.Data
         {
             var ads = _context.Ads;
 
-            return ads.Include(s => s.AppUser).ToList();
+            return ads.Include(s => s.AppUser).OrderByDescending(s => s.DateSubmitted).ToList();
         }
 
         public IEnumerable<AppUser> GetAllAppUsers()
@@ -82,6 +83,24 @@ namespace AllianceIntranet.Data
         public void RemoveClass(CEClass ceClass)
         {
             var removeClass = _context.CEClasses.Remove(ceClass);
+        }
+
+        public ICollection<OpenHouse> GetOpenHousesByUser(string id)
+        {
+            var openHouses = from a in _context.OpenHouses
+                      where a.AppUser.Id == id
+                      select a;
+
+            return openHouses
+                    .Include(s => s.AppUser)
+                    .ToList();
+        }
+
+        public ICollection<OpenHouse> GetAllOpenHouses()
+        {
+            var openHouses = _context.OpenHouses;
+
+            return openHouses.Include(s => s.AppUser).ToList();
         }
 
     }

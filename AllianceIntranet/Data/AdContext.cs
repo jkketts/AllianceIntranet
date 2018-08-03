@@ -20,6 +20,7 @@ namespace AllianceIntranet.Data
         public DbSet<Ad> Ads { get; set; }
         public DbSet<CEClass> CEClasses { get; set; }
         public DbSet<RegisteredAgent> RegisteredAgents { get; set; }
+        public DbSet<OpenHouse> OpenHouses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
