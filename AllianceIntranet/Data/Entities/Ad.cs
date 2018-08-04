@@ -13,7 +13,7 @@ namespace AllianceIntranet.Data.Entities
 
         public Ad(AdViewModel model, AppUser appUser)
         {
-            DateSubmitted = DateTime.Now;
+            DateSubmitted = DateTime.Now.ToLocalTime();
             MLSNumber = model.MLSNumber;
             Street = model.Street;
             City = model.City;

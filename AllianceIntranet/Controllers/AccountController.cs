@@ -306,5 +306,27 @@ namespace AllianceIntranet.Controllers
 
             return Redirect("/CEClass/classes");
         }
+
+        [HttpGet]
+        public IActionResult MakeAdmin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MakeAdmin(MakeAdminViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            
+            if (user != null)
+            {
+                await _userManager.AddToRoleAsync(user, "Admin");
+
+                return Redirect("/");
+            }
+
+            return RedirectToAction("Account", "MakeAdmin");
+
+        }
     }
 }
