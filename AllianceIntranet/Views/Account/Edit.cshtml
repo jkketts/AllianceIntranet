@@ -34,6 +34,11 @@
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
+    @if (User.IsInRole("Admin"))
+    {
+    <a class="btn btn-primary mt-3" asp-controller="Account" asp-action="MakeAdmin">Make Admin</a>
+    }
+
 </div>
 
 @section Scripts {

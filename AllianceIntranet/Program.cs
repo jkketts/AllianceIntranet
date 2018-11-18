@@ -36,6 +36,7 @@ namespace AllianceIntranet
                     logger.LogError(ex, "Seeder failed.");
                 }
             }
+
             
                 host.Run();
             //BuildWebHost(args).Run();

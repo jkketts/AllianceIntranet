@@ -112,23 +112,37 @@ namespace AllianceIntranet.Controllers
         }
 
         [HttpGet]
-        public IActionResult Agents()
+        public IActionResult Agents(string sortOrder)
         {
-            List<UserViewModel> UserList = new List<UserViewModel>();
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["EmailSortParm"] = sortOrder == "Email" ? "email_desc" : "Email";
+            ViewData["OfficeSortParm"] = sortOrder == "Office" ? "office_desc" : "Office";
 
-            foreach (var agent in _repo.GetAllAppUsers())
+            var agents = _repo.GetAllAppUsers();
+
+            switch (sortOrder)
             {
-                List<string> roles = _userManager.GetRolesAsync(agent).Result.ToList<string>();
-
-                if (!roles.Any())
-                {
-                    roles.Add("Agent");
-                }
-
-                UserList.Add(new UserViewModel() { UserId = agent.Id, FirstName = agent.FirstName, LastName = agent.LastName, Email = agent.Email, Office = agent.Office, Role = roles.First() });
+                case "name_desc":
+                    agents = agents.OrderByDescending(a => a.LastName).ToList();
+                    break;
+                case "email_desc":
+                    agents = agents.OrderByDescending(a => a.Email).ToList();
+                    break;
+                case "Email":
+                    agents = agents.OrderBy(a => a.Email).ToList();
+                    break;
+                case "office_desc":
+                    agents = agents.OrderByDescending(a => a.Office).ToList();
+                    break;
+                case "Office":
+                    agents = agents.OrderBy(a => a.Office).ToList();
+                    break;
+                default:
+                    agents = agents.OrderBy(a => a.LastName).ToList();
+                    break;
             }
 
-            return View(UserList);
+            return View(agents);
         }
 
         [HttpGet("Detail/{id}")]
@@ -184,7 +198,7 @@ namespace AllianceIntranet.Controllers
                     var AddPassword = await _userManager.AddPasswordAsync(agent, model.Password);
                     if (AddPassword.Succeeded)
                     {
-                        return Redirect("/Accounts/Agents");
+                        return Redirect("/Account/Agents");
                     }
                 }
             }
